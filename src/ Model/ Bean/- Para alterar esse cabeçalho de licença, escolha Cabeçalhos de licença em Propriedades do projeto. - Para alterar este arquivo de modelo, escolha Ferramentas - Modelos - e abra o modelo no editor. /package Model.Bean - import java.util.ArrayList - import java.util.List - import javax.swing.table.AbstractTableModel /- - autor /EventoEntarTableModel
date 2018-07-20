@@ -1,0 +1,84 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Model.Bean;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
+
+/**
+ *
+ * @author hyago
+ */
+public class EventoEntarTableModel extends  AbstractTableModel{
+    
+    private List<Evento>eve = new ArrayList<>();
+    private String [] colunas = {"id_evento", "nome_evento","organizador","Data_Inicio","Data_Fim"};
+
+    @Override
+    public String getColumnName(int column){
+        return colunas [column];   
+    }
+    
+    @Override
+    public int getRowCount() {
+        return eve.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return colunas.length;
+    }
+
+    @Override
+    public Object getValueAt(int linha, int coluna) {
+        switch(coluna){
+            case 0:
+                return eve.get(linha).getId_evento();
+            case 1:
+                return eve.get(linha).getNome_evento();
+            case 2:
+                return eve.get(linha).getOrganizador();
+            case 3:
+                return eve.get(linha).getData_Inicio();
+            case 4:
+                return eve.get(linha).getData_Fim();
+        }
+        return null;       
+    }
+    
+    @Override
+    public void setValueAt(Object valor, int linha, int coluna){
+          switch(coluna){
+            case 0:
+                eve.get(linha).setId_evento(Integer.parseInt((String)valor));
+                break;
+            case 1:
+                eve.get(linha).setNome_evento((String)valor);
+                break;
+            case 2:
+                eve.get(linha).setOrganizador((String)valor);
+                break;
+            case 3:
+                eve.get(linha).setData_Inicio((String)valor);
+               break;
+            case 4:
+                eve.get(linha).setData_Fim((String)valor);
+                break;
+        }
+        this.fireTableRowsUpdated(linha, linha);
+    }
+    
+    public void addRow (Evento e){
+       this.eve.add(e);
+       this.fireTableDataChanged();
+    }
+    
+    public void removerRow (int linha){
+       this.eve.remove(linha);
+       this.fireTableRowsDeleted(linha, linha);
+    }
+}
